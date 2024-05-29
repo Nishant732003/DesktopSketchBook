@@ -13,7 +13,7 @@ const MENUITEMS = {
     ERASER: 'ERASER',
     UNDO: 'UNDO',
     REDO: 'REDO',
-    DOWNLOAD:'DOWNLAOD'
+    DOWNLOAD:'DOWNLOAD'
 
 }
 export { COLORS ,MENUITEMS};

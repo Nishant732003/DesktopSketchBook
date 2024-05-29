@@ -15,6 +15,12 @@ import cx from 'classnames';
 const Menu = () => {
   const dispatch = useDispatch();
   const activeMenuItem = useSelector((state) => state.menu.activeMenuItem);
+
+
+  const handleActionItemClick = (itemName) => {
+    dispatch(actionItemClick(itemName));
+  }
+  
   const handleMenuClick = (itemName) => {
     dispatch(menuItemClick(itemName))
   }
@@ -36,13 +42,22 @@ const Menu = () => {
       >
         <FontAwesomeIcon icon={faEraser} className={styles.icon} />
       </div>
-      <div className={styles.iconWrapper}>
+      <div
+        className={styles.iconWrapper}
+        onClick={() => handleActionItemClick(MENUITEMS.UNDO)}
+      >
         <FontAwesomeIcon icon={faRotateLeft} className={styles.icon} />
       </div>
-      <div className={styles.iconWrapper}>
+      <div
+        className={styles.iconWrapper}
+        onClick={() => handleActionItemClick(MENUITEMS.REDO)}
+      >
         <FontAwesomeIcon icon={faRotateRight} className={styles.icon} />
       </div>
-      <div className={styles.iconWrapper}>
+      <div
+        className={styles.iconWrapper}
+        onClick={() => handleActionItemClick(MENUITEMS.DOWNLOAD)}
+      >
         <FontAwesomeIcon icon={faArrowDown} className={styles.icon} />
       </div>
     </div>
