@@ -1,12 +1,15 @@
-import styles from "./index.module.css"
-import { COLORS } from "@/contsnts";
+import { useSelector } from "react-redux";
+import styles from "./index.module.css";
+import { COLORS, MENUITEMS } from "@/contsnts";
 const ToolBox = () => {
-    const updateBrushSize = (e) => {
-        
-    }
+  const activeMenuItem = useSelector((state) => state.menu.activeMenuItem);
+  const showStrokeToolOption = activeMenuItem === MENUITEMS.PENCIL;
+  const showBrushToolOption = activeMenuItem===MENUITEMS.PENCIL || MENUITEMS.ERASER;
+  const updateBrushSize = (e) => {};
 
-    return (
-      <div className={styles.toolboxContainer}>
+  return (
+    <div className={styles.toolboxContainer}>
+      {showStrokeToolOption && (
         <div className={styles.toolItem}>
           <h4 className={styles.toolText}>Stroke Color</h4>
           <div className={styles.itemContainer}>
@@ -36,8 +39,10 @@ const ToolBox = () => {
             />
           </div>
         </div>
+      )}
+      {showBrushToolOption && (
         <div className={styles.toolItem}>
-          <h4 className={styles.toolText}> Brush Size </h4>
+          <h4 className={styles.toolText}> Brush Size</h4>
           <div className={styles.itemContainer}>
             <input
               type="range"
@@ -48,7 +53,8 @@ const ToolBox = () => {
             />
           </div>
         </div>
-      </div>
-    );
-}
+      )}
+    </div>
+  );
+};
 export default ToolBox;
