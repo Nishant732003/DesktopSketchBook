@@ -9,7 +9,8 @@ import {
 import styles from './index.module.css'
 import { useDispatch, useSelector } from "react-redux";
 import { MENUITEMS } from "@/contsnts";
-import { menuItemClick,actionItemClick } from "@/redux/slice/menuSlice";
+import { menuItemClick, actionItemClick } from "@/redux/slice/menuSlice";
+import { socket } from "@/socket";
 import cx from 'classnames';
 
 const Menu = () => {
@@ -19,6 +20,7 @@ const Menu = () => {
 
   const handleActionItemClick = (itemName) => {
     dispatch(actionItemClick(itemName));
+     socket.emit("actionItemClick", itemName);
   }
   
   const handleMenuClick = (itemName) => {
