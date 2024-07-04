@@ -8,12 +8,16 @@ const ToolBox = () => {
   const dispatch = useDispatch();
   const activeMenuItem = useSelector((state) => state.menu.activeMenuItem);
   const showStrokeToolOption = activeMenuItem === MENUITEMS.PENCIL;
-  const showBrushToolOption = activeMenuItem===MENUITEMS.PENCIL || MENUITEMS.ERASER;
+  const showBrushToolOption = activeMenuItem === MENUITEMS.PENCIL || MENUITEMS.ERASER;
+       const { color, size } = useSelector(
+         (state) => state.toolBox[activeMenuItem]
+  );
+  
   const updateBrushSize = (e) => {
     dispatch(changeBrushSize({ item: activeMenuItem, size: e.target.value }));
     socket.emit('changeConfig', { color, size: e.target.value });
   };
-     const { color,size } = useSelector((state) => state.toolBox[activeMenuItem]);
+
   const updateColor = (newColor) => {
     dispatch(changeColor({ item: activeMenuItem, color: newColor }));
      socket.emit("changeConfig", { color:newColor, size });
@@ -79,8 +83,8 @@ const ToolBox = () => {
               min={1}
               max={10}
               step={1}
-              value={size}
               onChange={updateBrushSize}
+              value={size}
             />
           </div>
         </div>

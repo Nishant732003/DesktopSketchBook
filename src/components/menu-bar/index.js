@@ -4,28 +4,39 @@ import {
   faEraser,
   faRotateLeft,
   faRotateRight,
-  faArrowDown,
+  faFileArrowDown,
 } from "@fortawesome/free-solid-svg-icons";
+
 import styles from './index.module.css'
 import { useDispatch, useSelector } from "react-redux";
 import { MENUITEMS } from "@/contsnts";
 import { menuItemClick, actionItemClick } from "@/redux/slice/menuSlice";
 import { socket } from "@/socket";
 import cx from 'classnames';
-
+import { COLORS } from "@/contsnts";
 const Menu = () => {
   const dispatch = useDispatch();
   const activeMenuItem = useSelector((state) => state.menu.activeMenuItem);
-
-
+   
+   const handleMenuClick = (itemName) => {
+     dispatch(menuItemClick(itemName));
+     if (itemName === MENUITEMS.ERASER) {
+       // Broadcast the eraser color and size to all instances
+       const eraserColor = COLORS.WHITE; 
+       const eraserSize = 3;
+       socket.emit("changeConfig", { color: eraserColor, size: eraserSize });
+     }
+    //  socket.emit('menuItemClick',itemName);
+   };
+  
+  
   const handleActionItemClick = (itemName) => {
     dispatch(actionItemClick(itemName));
+    
      socket.emit("actionItemClick", itemName);
   }
   
-  const handleMenuClick = (itemName) => {
-    dispatch(menuItemClick(itemName))
-  }
+ 
   return (
     <div className={styles.menuContainer}>
       <div
@@ -60,7 +71,7 @@ const Menu = () => {
         className={styles.iconWrapper}
         onClick={() => handleActionItemClick(MENUITEMS.DOWNLOAD)}
       >
-        <FontAwesomeIcon icon={faArrowDown} className={styles.icon} />
+        <FontAwesomeIcon icon={faFileArrowDown} className={styles.icon} />
       </div>
     </div>
   );
